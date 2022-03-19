@@ -10,9 +10,9 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
   return (
     <BaseModal title="How to play" isOpen={isOpen} handleClose={handleClose}>
       <p className="text-sm text-gray-500 dark:text-gray-300">
-        Guess the 16bit(HEX, hexadecimal) number in 6 tries. After each guess,
+        Guess the 16-bit(HEX, hexadecimal) number in 6 tries. After each guess,
         the color of the tiles will change to show how close your guess was to
-        the 16bit number.
+        the 16-bit number.
       </p>
 
       <div className="flex justify-center mb-1 mt-4">
@@ -64,12 +64,12 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
         <Cell value="C" />
       </div>
       <p className="text-sm text-gray-500 dark:text-gray-300">
-        The number 9 is not in the word in any spot.
+        The number 9 is not in the number in any spot.
       </p>
 
       <p className="mt-6 italic text-sm text-gray-500 dark:text-gray-300">
-        This is an open source version of the word guessing game we all know and
-        love -{' '}
+        This is an open source version of the <strong>word</strong> guessing
+        game we all know and love -{' '}
         <a
           href="https://github.com/tofu4956/0xdle"
           className="underline font-bold"
