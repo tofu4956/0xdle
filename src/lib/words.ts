@@ -2,6 +2,33 @@ import { WRONG_SPOT_MESSAGE, NOT_CONTAINED_MESSAGE } from '../constants/strings'
 import { getGuessStatuses } from './statuses'
 import { default as GraphemeSplitter } from 'grapheme-splitter'
 
+// The javascript Math.random is **not** supported constant seed, so It should be used self-made random() to prevent game is collapsed.
+// https://sbfl.net/blog/2017/06/01/javascript-reproducible-random/
+
+class Random {
+  x: number;
+  y: number;
+  z: number;
+  w: number;
+  constructor(seed = 45563223342) {
+    this.x = 123456789;
+    this.y = 362436069;
+    this.z = 521288629;
+    this.w = seed;
+  }
+
+  next() {
+    let t;
+    t = this.x ^ (this.x << 11);
+    this.x = this.y; this.y = this.z; this.z = this.w;
+    return this.w = (this.w ^ (this.w >>> 19)) ^ (t ^ (t >>> 8));
+  }
+  nextInt() {
+    const r = Math.abs(this.next());
+    return (r % 16);
+  }
+}
+
 export const isWinningWord = (word: string) => {
   return solution === word
 }
@@ -66,14 +93,16 @@ export const localeAwareUpperCase = (text: string) => {
 }
 
 export const getWordOfDay = () => {
-  // January 1, 2000 Game Epoch
-  const epochMs = new Date(2000, 0).valueOf()
+  // March 20, 2022 Game Epoch
+  const epochMs = new Date(2022, 2, 20).valueOf()
   const now = Date.now()
   const msInDay = 86400000
   const index = Math.floor((now - epochMs) / msInDay)
   const nextday = (index + 1) * msInDay + epochMs
+
+  const random = new Random(index);
   const solution_buffer = ['0', '0', '0', '0', '0', '0', '0', '0'].map(() => {
-    const letter = Math.floor(Math.random() * 16).toString(16)
+    const letter = random.nextInt().toString(16)
     return localeAwareUpperCase(letter);
   })
   return {
